@@ -10,9 +10,5 @@ class Cheeseburger
     def tax
       15
     end
-
-    def discount(product = '')
-      0
-    end
   end
 end

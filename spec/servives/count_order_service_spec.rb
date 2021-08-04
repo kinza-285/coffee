@@ -12,6 +12,7 @@ describe CountOrderService do
     @service = CountOrderService.new(@order)
     @cheeseburger_service = CountOrderService.new(@cheeseburger_order)
     @model = Tee
+    @item = 'tee'
   end
 
   it 'count correctly' do
@@ -27,11 +28,11 @@ describe CountOrderService do
   end
 
   it 'discount correct' do
-    expect(@service.discount(@model)).to eq(20)
+    expect(@service.discount(@item)).to eq(20)
   end
 
   it 'discount cheeseburger correct' do
-    expect(@cheeseburger_service.discount(@model)).to eq(100)
+    expect(@cheeseburger_service.discount(@item)).to eq(100)
   end
 
   it 'tax_coefficient correct' do
@@ -39,6 +40,6 @@ describe CountOrderService do
   end
 
   it 'discount_coefficient correct' do
-    expect(@service.discount_coefficient(@model)).to eq(0.8)
+    expect(@service.discount_coefficient(@item)).to eq(0.8)
   end
 end

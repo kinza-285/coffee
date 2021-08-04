@@ -3,6 +3,7 @@
 require 'active_support/core_ext/string'
 # require all models files
 Dir.glob('app/models/*.rb').each { |file| require_relative "../../#{file}" }
+require 'yaml'
 
 # count order service class
 class CountOrderService
@@ -24,12 +25,18 @@ class CountOrderService
     model = item[0].capitalize.constantize
     price = model.price
     amount = item[1]
-    price * amount * tax_coefficient(model) * discount_coefficient(model)
+    price * amount * tax_coefficient(model) * discount_coefficient(item[0])
   end
 
   # count discount fot item
-  def discount(model)
-    order.map { |e| model.discount(e[0]) }.max
+  def discount(item)
+    path = File.expand_path('../../../public/discounts.yml', __FILE__)
+    discounts = YAML.load_file(path)
+    if discounts[item]
+      order.map { |e| discounts[item][e[0]] }.compact.max || 0
+    else
+      0
+    end
   end
 
   # count tax coefficient fot item
@@ -38,7 +45,7 @@ class CountOrderService
   end
 
   # count discount coefficient fot item
-  def discount_coefficient(model)
-    1 - discount(model) / 100.0
+  def discount_coefficient(item)
+    1 - discount(item) / 100.0
   end
 end

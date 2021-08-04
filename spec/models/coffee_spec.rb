@@ -11,8 +11,4 @@ describe Coffee do
   it "tax is correct" do
     expect(Coffee.tax).to eq(10)
   end
-
-  it "discount is correct" do
-    expect(Coffee.discount).to eq(0)
-  end
 end

@@ -10,9 +10,5 @@ class Hamburger
     def tax
       20
     end
-
-    def discount(product = '')
-      0
-    end
   end
 end
