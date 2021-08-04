@@ -31,9 +31,9 @@ class CountOrderService
   # count discount fot item
   def discount(item)
     path = File.expand_path('../../../public/discounts.yml', __FILE__)
-    discounts = YAML.load_file(path)
-    if discounts[item]
-      order.map { |e| discounts[item][e[0]] }.compact.max || 0
+    @discounts ||= YAML.load_file(path)
+    if @discounts[item]
+      order.map { |e| @discounts[item][e[0]] }.compact.max || 0
     else
       0
     end
